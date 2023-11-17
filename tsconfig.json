@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    // ... your other compiler options
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"], // install `npm install -D @types/node`
+      // "@components/*": ["src/components/*"],
+      // "@constant": ["src/constant"],
+      // "@assets/*": ["src/assets/*"],
+      // "@features/*": ["src/features/*"],
+    },
+  },
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}

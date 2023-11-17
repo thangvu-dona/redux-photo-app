@@ -1,35 +1,26 @@
 import React, { Suspense } from 'react'
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
-import './App.css'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import './App.scss'
+import Header from './components/Header'
 import NotFound from './components/NotFound'
+import Photo from './features/Photo'
 
 // Lazy load - Code Splitting
-const Photo = React.lazy(() => import('./features/Photo'))
+// const Photo = React.lazy(() => import('./features/Photo'))
 
 function App() {
   return (
     <div className="photo-app">
-      <Suspense fallback={<div>Loading ...</div>}>
-        <BrowserRouter>
-          {/* TODO: remove after testing */}
-          <ul>
-            <li>
-              <Link to="/photos">Go to photo page</Link>
-            </li>
-            <li>
-              <Link to="/photos/add">Go to Add new photo page</Link>
-            </li>
-            <li>
-              <Link to="/photos/123">Go to Edit photo page</Link>
-            </li>
-          </ul>
+      {/* <Suspense fallback={<div>Loading ...</div>}> */}
+      <BrowserRouter>
+        <Header />
 
-          <Routes>
-            <Route path="/photos/*" element={<Photo />} />
-            <Route element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </Suspense>
+        <Routes>
+          <Route path="/photos/*" element={<Photo />} />
+          <Route element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+      {/* </Suspense> */}
     </div>
   )
 }

@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Route, Routes } from 'react-router-dom'
-import MainPage from './pages/MainPage'
-import NotFound from '../../components/NotFound'
-import AddEditPage from './pages/AddEditPage'
+import MainPage from './pages/Main'
+import AddEditPage from './pages/AddEdit'
+import NotFound from '@/components/NotFound'
 
 Photo.propTypes = {}
 
