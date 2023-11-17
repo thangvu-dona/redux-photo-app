@@ -1,13 +1,12 @@
 import { PHOTO_CATEGORY_OPTIONS } from '@/constants/global'
-import Images from '@/constants/images'
+import InputField from '@/custom_fields/InputField'
+import RandomPhotoField from '@/custom_fields/RandomPhotoField'
+import SelectField from '@/custom_fields/SelectField'
 import { FastField, Form, Formik } from 'formik'
 import PropTypes from 'prop-types'
 import React from 'react'
-import Select from 'react-select'
-import { Button, FormGroup, Input, Label } from 'reactstrap'
-import InputField from '@/custom_fields/InputField'
-import SelectField from '@/custom_fields/SelectField'
-import RandomPhotoField from '@/custom_fields/RandomPhotoField'
+import { Button, FormGroup } from 'reactstrap'
+import * as yup from 'yup'
 
 PhotoForm.propTypes = {
   onSubmit: PropTypes.func,
@@ -22,12 +21,25 @@ function PhotoForm(props) {
   const initialValues = {
     title: '', // should not `undefined` value, will cause error: `uncontrolled` --> `control` input
     categoryId: null,
-    photo: null,
+    photo: '',
   }
+
+  const schema = yup.object().shape({
+    title: yup.string().required('Please enter your title.'),
+    categoryId: yup.number().required('This field is required'),
+    // photo: yup.string().required('Please random your image.'),
+    photo: yup.string().when('categoryId', {
+      is: 1,
+      then: (schema) => schema.required('Please random your image.'),
+      otherwise: (schema) => schema.notRequired(),
+    }),
+  })
+
   // npm i --save react-select
   return (
     <Formik
       initialValues={initialValues}
+      validationSchema={schema}
       onSubmit={(values) => console.log('submit values: ', values)}
     >
       {(formikProps) => {

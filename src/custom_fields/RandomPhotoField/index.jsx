@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import RandomPhoto from '@/components/RandomPhoto'
-import { FormGroup, Label } from 'reactstrap'
+import { FormFeedback, FormGroup, Label } from 'reactstrap'
+import { ErrorMessage } from 'formik'
 
 RandomPhotoField.propTypes = {
   form: PropTypes.object.isRequired,
@@ -17,6 +18,8 @@ RandomPhotoField.defaultProps = {
 function RandomPhotoField(props) {
   const { form, field, label } = props
   const { name, value, onBlur } = field
+  const { errors, touched } = form
+  const showError = errors[name] && touched[name]
 
   const handleImageUrlChange = (newImageUrl) => {
     // image change and trigger re-render form
@@ -33,6 +36,9 @@ function RandomPhotoField(props) {
         onImageUrlChange={handleImageUrlChange}
         onRandomButtonBlur={onBlur}
       />
+
+      <p className={showError ? 'is-invalid' : ''}></p>
+      <ErrorMessage name={name} component={FormFeedback}></ErrorMessage>
     </FormGroup>
   )
 }
