@@ -7,6 +7,7 @@ import Select from 'react-select'
 import { Button, FormGroup, Input, Label } from 'reactstrap'
 import InputField from '@/custom_fields/InputField'
 import SelectField from '@/custom_fields/SelectField'
+import RandomPhotoField from '@/custom_fields/RandomPhotoField'
 
 PhotoForm.propTypes = {
   onSubmit: PropTypes.func,
@@ -21,10 +22,14 @@ function PhotoForm(props) {
   const initialValues = {
     title: '', // should not `undefined` value, will cause error: `uncontrolled` --> `control` input
     categoryId: null,
+    photo: null,
   }
   // npm i --save react-select
   return (
-    <Formik initialValues={initialValues}>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={(values) => console.log('submit values: ', values)}
+    >
       {(formikProps) => {
         // do something here...
         const { values, errors, touched } = formikProps
@@ -49,25 +54,12 @@ function PhotoForm(props) {
               options={PHOTO_CATEGORY_OPTIONS}
             />
 
-            <FormGroup>
-              <Label for="categoryId">Photo</Label>
+            <FastField name="photo" component={RandomPhotoField} label="Photo" />
 
-              <div>
-                <Button type="button" outline color="primary">
-                  Random a photo
-                </Button>
-              </div>
-              <div>
-                <img
-                  width="200px"
-                  height="200px"
-                  src={Images.COLORFUL_BG}
-                  alt="colorful background"
-                />
-              </div>
-            </FormGroup>
             <FormGroup>
-              <Button color="primary">Add to album</Button>
+              <Button type="submit" color="primary">
+                Add to album
+              </Button>
             </FormGroup>
           </Form>
         )
