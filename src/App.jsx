@@ -16,9 +16,8 @@ function App() {
 
           <Routes>
             <Route path="/" element={<h1>Home Page Component</h1>} />
-            <Route path="/photos/*" element={Photo} />
+            <Route path="/photos/*" element={<Photo />} />
             <Route element={<NotFound />} />
-            <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </BrowserRouter>
       </Suspense>
