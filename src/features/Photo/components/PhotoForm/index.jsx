@@ -10,19 +10,17 @@ import * as yup from 'yup'
 
 PhotoForm.propTypes = {
   onSubmit: PropTypes.func,
+  initialValues: PropTypes.object,
 }
 
 PhotoForm.defaultProps = {
   onSubmit: null,
+  initialValues: {},
 }
 
 function PhotoForm(props) {
   // formik need an initialValues
-  const initialValues = {
-    title: '', // should not `undefined` value, will cause error: `uncontrolled` --> `control` input
-    categoryId: null,
-    photo: '',
-  }
+  const { initialValues, isAddMode } = props
 
   const schema = yup.object().shape({
     title: yup.string().required('Please enter your title.'),
@@ -70,8 +68,8 @@ function PhotoForm(props) {
             <FastField name="photo" component={RandomPhotoField} label="Photo" />
 
             <FormGroup>
-              <Button type="submit" color="primary">
-                Add to album
+              <Button type="submit" color={isAddMode ? 'primary' : 'success'}>
+                {isAddMode ? 'Add to album' : 'Update your photo'}
               </Button>
               {isSubmitting && <Spinner size="sm" />}
             </FormGroup>

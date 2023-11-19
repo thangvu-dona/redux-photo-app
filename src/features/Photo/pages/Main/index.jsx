@@ -1,23 +1,29 @@
 import Banner from '@/components/Banner'
 import Images from '@/constants/images'
 import React from 'react'
-import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
 import { Container } from 'reactstrap'
 import PhotoList from '@/features/Photo/components/PhotoList'
+import { removePhoto } from '@/features/Photo/photoSlice'
 
 MainPage.propTypes = {}
 
 function MainPage(props) {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
   const photos = useSelector((state) => state.photos)
   console.log('photo list: ', photos)
 
   const handlePhotoEditClick = (photo) => {
     console.log('Edit: ', photo)
+    navigate(`/photos/${photo.id}`)
   }
 
   const handlePhotoRemoveClick = (photo) => {
     console.log('Remove: ', photo)
+    dispatch(removePhoto(photo.id))
   }
 
   return (
