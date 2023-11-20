@@ -1,3 +1,4 @@
-export function randomNumber(a, b) {
-  return Math.trunc(Math.random() * (b - a))
+
+export const randomNumber = (min, max) => {
+  return min + Math.trunc(Math.random() * (max - min));
 }

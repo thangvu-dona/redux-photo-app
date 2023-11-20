@@ -9,7 +9,7 @@ const getFirebaseToken = async () => {
 
   // not logged in
   const hasRememberedAccount = localStorage.getItem('firebaseui::rememberedAccounts')
-  if (hasRememberedAccount) return null
+  if (!hasRememberedAccount) return null
 
   // logged in but current user is not fetched - wait 10s
   return new Promise((resolve, reject) => {
