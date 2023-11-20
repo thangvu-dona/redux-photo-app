@@ -8,6 +8,9 @@ import SignIn from './features/Auth/pages/SignIn'
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/auth'
 import { Button } from 'reactstrap'
+import { useDispatch } from 'react-redux'
+import { getMe } from './app/userSlice'
+import { unwrapResult } from '@reduxjs/toolkit'
 
 // Lazy load - Code Splitting
 const Photo = React.lazy(() => import('./features/Photo'))
@@ -21,6 +24,7 @@ firebase.initializeApp(config)
 
 function App() {
   const [productList, setProductList] = useState([])
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const fetchProductList = async () => {
@@ -53,10 +57,21 @@ function App() {
         return
       }
 
-      console.log('Logged in user: ', user.displayName)
+      try {
+        // Get me when sign in
+        const action = getMe()
+        const actionResult = await dispatch(action)
+        const currentUser = unwrapResult(actionResult) // unwrapResult will catch error
+        console.log('ActionResult, Current user: ', actionResult, currentUser)
+      } catch (error) {
+        console.log('Faild to login ', error.message)
+        // show toast error
+      }
 
-      const token = await user.getIdToken()
-      console.log('Logged in user token: ', token)
+      // console.log('Logged in user: ', user.displayName)
+
+      // const token = await user.getIdToken()
+      // console.log('Logged in user token: ', token)
     })
 
     return () => unregisterAuthObserver // Make sure we un-register Firebase observers when the component unmounts.
