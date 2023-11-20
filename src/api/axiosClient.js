@@ -1,5 +1,7 @@
 import axios from "axios";
 import queryString from "query-string";
+import firebase from 'firebase/compat/app'
+// import 'firebase/compat/auth'
 
 const axiosClient = axios.create({
   // baseURL: process.env.REACT_APP_API_URL,
@@ -11,8 +13,16 @@ const axiosClient = axios.create({
 });
 
 // Thêm một bộ đón chặn request
-axiosClient.interceptors.request.use(function (config) {
+axiosClient.interceptors.request.use(async function (config) {
   // Làm gì đó trước khi request dược gửi đi
+  // handle token here
+  const currentUser = firebase.auth().currentUser
+  if (currentUser) {
+    // getIdtoken() method will be auto-fetch token if it expired
+    const token = await currentUser.getIdToken();
+    config.headers.Authorization = `Bearer ${token}`
+  }
+
   return config;
 }, function (error) {
   // Làm gì đó với lỗi request
