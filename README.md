@@ -2,8 +2,6 @@
 
 ## Setup environment 
 
-Github Project: https://github.com/paulnguyen-mn/redux-photo-app
-
 ### 1. Setup ReactJS App via Create React App
 
 > Link: https://create-react-app.dev/docs/getting-started/
